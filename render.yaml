@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: e2ee-chat-backend
+    env: docker
+    region: ohio
+    plan: free
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
+    envVars:
+      - key: SPRING_DATA_MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PORT
+        value: "8080"

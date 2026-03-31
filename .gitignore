@@ -34,7 +34,7 @@ frontend/build/
 # Environment
 .env
 *.env
-
+.env*
 # IntelliJ
 out/
 
