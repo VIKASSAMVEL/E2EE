@@ -1,9 +1,14 @@
 package com.e2ee.chat.models;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 @Data
+@Document(collection = "messages")
 public class ChatMessage {
+    @Id
+    private String id;
     private String senderId;
     private String receiverId;
     private String encryptedPayload; // The AES-256 cipher text

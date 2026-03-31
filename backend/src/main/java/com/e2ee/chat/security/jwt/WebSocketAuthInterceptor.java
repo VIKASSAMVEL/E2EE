@@ -31,8 +31,9 @@ public class WebSocketAuthInterceptor implements ChannelInterceptor {
                 if (jwtUtils.validateJwtToken(token)) {
                     String username = jwtUtils.getUserNameFromJwtToken(token);
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                    // Critical for routing: principal must be the username string or an object where getName() returns username.
                     UsernamePasswordAuthenticationToken authentication = 
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());
                     accessor.setUser(authentication);
                 }
             }

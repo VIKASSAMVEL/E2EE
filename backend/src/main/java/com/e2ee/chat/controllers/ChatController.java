@@ -1,6 +1,7 @@
 package com.e2ee.chat.controllers;
 
 import com.e2ee.chat.models.ChatMessage;
+import com.e2ee.chat.repository.ChatMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -13,10 +14,16 @@ public class ChatController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    @Autowired
+    private ChatMessageRepository chatMessageRepository;
+
     @MessageMapping("/chat.sendPrivateMessage")
     public void sendPrivateMessage(@Payload ChatMessage chatMessage) {
-        // Zero-trust routing: Server cannot decrypt the payload nor the symmetric key.
-        // It simply routes the payload directly to the receiver's private queue.
+        // [TACTICAL_DATA_LINK] - Save to Cloud Atlas for Persistence
+        System.out.println("LOG: ROUTING PAYLOAD FROM [" + chatMessage.getSenderId() + "] TO [" + chatMessage.getReceiverId() + "]...");
+        
+        chatMessageRepository.save(chatMessage);
+        
         messagingTemplate.convertAndSendToUser(
                 chatMessage.getReceiverId(), "/queue/messages", chatMessage);
     }

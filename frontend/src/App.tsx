@@ -63,81 +63,94 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden font-mono cyber-grid">
-      <div className="scanline"></div>
-      
-      <div className="max-w-md w-full space-y-8 terminal-glass p-10 relative z-10 neon-border">
-        <div className="text-center">
-          <div className="inline-block p-2 border border-primary/50 mb-4 animate-pulse">
-            <span className="text-primary text-xs uppercase tracking-widest">[ SECURITY CONSOLE v2.0 ]</span>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 relative overflow-hidden font-sans">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-indigo-500 to-blue-600"></div>
+      <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl"></div>
+      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-100/50 rounded-full blur-3xl"></div>
+
+      <div className="max-w-md w-full p-8 bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-slate-100 relative z-10 mx-4">
+        <div className="text-center mb-10">
+          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-3xl font-bold shadow-lg shadow-blue-500/30 mx-auto mb-6 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+            E2E
           </div>
-          <h2 className="glitch-text text-center text-4xl font-display font-bold text-primary mb-2 neon-text">
-            SECURE_E2EE_CHAT
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-2">
+            Messenger
           </h2>
-          <p className="text-primary/70 text-xs uppercase tracking-widest">
-            {isRegistered ? "AUTHENTICATION_REQUIRED" : "NEW_IDENTITY_PROTOCOL"}
+          <p className="text-slate-500 text-sm font-medium">
+            {isRegistered ? "Welcome back! Please sign in." : "Create your secure identity."}
           </p>
         </div>
         
         {errorMsg && (
-            <div className="bg-red-950/50 text-red-500 p-3 rounded-md text-xs border border-red-500/50 uppercase tracking-tight">
-                [{errorMsg}]
+            <div className="mb-6 bg-red-50 text-red-600 p-4 rounded-2xl text-xs font-bold border border-red-100 flex items-center space-x-2 animate-in fade-in zoom-in duration-300">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span>{errorMsg}</span>
             </div>
         )}
 
-        <form className="mt-8 space-y-4" onSubmit={(e) => { e.preventDefault(); handleAuth(); }}>
+        <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); handleAuth(); }}>
           <div className="space-y-4">
-            <div className="relative group">
-              <label className="text-[10px] text-primary/50 uppercase absolute -top-2 left-2 px-1 bg-black z-10 transition-colors group-focus-within:text-primary">User_Address</label>
+            <div className="flex flex-col space-y-1.5">
+              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Username</label>
               <input 
                 name="username" 
                 type="text" 
                 required 
                 value={username}
                 onChange={e => setUsername(e.target.value)}
-                className="block w-full px-4 py-3 bg-black/50 border border-primary/30 text-primary placeholder-primary/20 focus:outline-none focus:border-primary transition-all sm:text-sm rounded-none" placeholder="Enter ID..." />
+                className="w-full px-5 py-4 bg-slate-50 border border-slate-100 text-slate-900 placeholder-slate-300 focus:outline-none focus:border-blue-300 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all rounded-2xl text-sm font-semibold" 
+                placeholder="Choose a username" 
+              />
             </div>
             
-            <div className="relative group">
-              <label className="text-[10px] text-primary/50 uppercase absolute -top-2 left-2 px-1 bg-black z-10 transition-colors group-focus-within:text-primary">Auth_Sequence</label>
+            <div className="flex flex-col space-y-1.5">
+              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Password</label>
               <input 
                 name="password" 
                 type="password" 
                 required 
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className="block w-full px-4 py-3 bg-black/50 border border-primary/30 text-primary placeholder-primary/20 focus:outline-none focus:border-primary transition-all sm:text-sm rounded-none" placeholder="••••••••" />
+                className="w-full px-5 py-4 bg-slate-50 border border-slate-100 text-slate-900 placeholder-slate-300 focus:outline-none focus:border-blue-300 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all rounded-2xl text-sm font-semibold" 
+                placeholder="••••••••" 
+              />
             </div>
           </div>
 
-          <div className="pt-2">
+          <div className="pt-4">
             <button 
                 type="submit" 
                 disabled={isLoading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-primary text-xs font-bold uppercase tracking-[0.2em] text-black bg-primary hover:bg-black hover:text-primary focus:outline-none transition-all disabled:opacity-30 cursor-pointer shadow-[0_0_15px_rgba(0,255,65,0.4)]">
-              {isLoading ? "EXECUTING..." : (isRegistered ? 'INITIALIZE_SESSION' : 'GENERATE_IDENTITY')}
+                className="w-full flex justify-center py-4 px-6 bg-blue-600 text-white text-sm font-bold rounded-2xl hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/20 active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer shadow-lg shadow-blue-500/10">
+              {isLoading ? "Processing..." : (isRegistered ? 'Sign In' : 'Create Identity')}
             </button>
           </div>
           
           <div className="text-center pt-2">
-            <button type="button" onClick={() => setIsRegistered(!isRegistered)} className="text-primary/50 text-[10px] uppercase tracking-widest hover:text-primary transition-colors cursor-pointer">
-              {isRegistered ? "> Create New Secure Tunnel" : "> Existing Identity Found"}
+            <button 
+              type="button" 
+              onClick={() => setIsRegistered(!isRegistered)} 
+              className="text-slate-400 text-[11px] font-bold uppercase tracking-widest hover:text-blue-600 transition-colors cursor-pointer"
+            >
+              {isRegistered ? "Don't have an account? Create one" : "Already have an account? Sign in"}
             </button>
           </div>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-primary/10 flex justify-between items-center opacity-40">
-           <span className="text-[8px] uppercase tracking-tighter text-primary/50">Connection: SECURE_STOMP_WSS://</span>
-           <span className="text-[8px] uppercase tracking-tighter text-primary/50">Status: NODE_STANDBY</span>
+        <div className="mt-10 pt-8 border-t border-slate-50 flex flex-col items-center space-y-3">
+           <div className="flex items-center space-x-2">
+              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-300">Secure AES-GCM Protocol Active</span>
+           </div>
+           <p className="text-[9px] text-slate-300 text-center max-w-[200px] leading-relaxed">
+             This session is fully end-to-end encrypted. Your private keys never leave this device.
+           </p>
         </div>
       </div>
-
-      {/* Background HUD elements */}
-      <div className="absolute top-10 left-10 text-[8px] text-primary/20 leading-relaxed font-mono uppercase hidden lg:block">
-        SYS_STATUS: OPTIMAL<br/>
-        ENCRYPTION: RSA_2048_ACTIVE<br/>
-        TUNNEL: WSS_V3<br/>
-        NODE_ID: {Math.random().toString(36).substring(7).toUpperCase()}
+      
+      <div className="mt-8 text-slate-300 text-[10px] font-bold uppercase tracking-[0.3em]">
+        © 2026 Secure E2E Messenger
       </div>
     </div>
   );
