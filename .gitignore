@@ -1,0 +1,47 @@
+# Java / Maven
+target/
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Spring Boot
+log/
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+pm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
+
+# Build output
+frontend/dist/
+frontend/build/
+
+# Environment
+.env
+*.env
+
+# IntelliJ
+out/
+
+# Misc
+*.tmp
+*.swp
+
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+.agent/
